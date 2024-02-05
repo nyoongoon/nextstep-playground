@@ -1,4 +1,6 @@
-study/StringTest.java
- study.StringTest
 study/SetTest.java
  study.SetTest
+study/StringTest.java
+ study.StringTest
+study/StringCalculatorTest.java
+ study.StringCalculatorTest
