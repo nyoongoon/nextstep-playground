@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="study.SetTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2024-02-05T21:43:24" hostname="Seokbinui-MacBookPro.local" time="0.081">
+  <properties/>
+  <testcase name="[1] 1" classname="study.SetTest" time="0.07"/>
+  <testcase name="[2] 2" classname="study.SetTest" time="0.003"/>
+  <testcase name="[3] 3" classname="study.SetTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
