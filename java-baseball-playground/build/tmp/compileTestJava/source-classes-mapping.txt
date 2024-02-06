@@ -4,3 +4,5 @@ study/StringTest.java
  study.StringTest
 study/StringCalculatorTest.java
  study.StringCalculatorTest
+baseball/BaseBallGameTest.java
+ baseball.BaseBallGameTest
