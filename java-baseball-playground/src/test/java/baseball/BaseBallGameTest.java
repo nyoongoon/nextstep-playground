@@ -40,7 +40,7 @@ class BaseBallGameTest {
     @Test
     @DisplayName("숫자 직접 추가 - 잘못 입력")
     void test1_2(){
-
+        int result = Integer.parseInt("ㄱ");
     }
 
     void input(){

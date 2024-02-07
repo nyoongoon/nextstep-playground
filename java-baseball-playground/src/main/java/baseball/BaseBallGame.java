@@ -4,26 +4,22 @@ import java.util.Scanner;
 
 public class BaseBallGame {
     Scanner scanner = new Scanner(System.in);
-    String number;
-    public void setting(){
-        int n = (int)(Math.random() * 899) + 100;
-        number = String.valueOf(n);
+    int number;
+
+    public void setting() {
+        number = (int) (Math.random() * 899) + 100;
     }
-    public void manualSetting(){
+
+    public void manualSetting() {
         System.out.println("숫자를 입력해주세요.");
         // 입력받기 &&  변환 가능 판단
         String input = scanner.nextLine();
-        while(!isDigitString(input)){
-            System.out.println("숫자가 아닙니다. 다시 입력해주세요.");
-            input = scanner.nextLine();
-        }
-
+        number = transToNum(input, scanner);
 
 
         // 변환
 
         // 자리수
-
 
 
 //        while(number == null){
@@ -33,20 +29,18 @@ public class BaseBallGame {
 //            System.out.println("올바른 숫자를 입력해주세요.");
 //            str = scanner.nextLine();
 //        }
-        number = str;
+//        number = str;
     }
 
-    public boolean isDigitString(String input){
-        boolean result = false;
-        for (int i = 0; i < input.length(); i++) {
-            result = isDigitChar();
-            char c = input.charAt(i);
-            if(Character.isDigit(c)){
-
-            }
+    public int transToNum(String input, Scanner scanner) {
+        int result = 0;
+        try {
+            result = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            System.out.println("잘못된 숫자입니다. 다시 입력해 주세요.");
+            String reInput
+            result = transToNum()
         }
-        return
+        return null;
     }
-
-
 }
