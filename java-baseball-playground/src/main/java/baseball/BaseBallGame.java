@@ -34,7 +34,7 @@ public class BaseBallGame {
         return checkDigits(result); //자리수 판단
     }
 
-    public String checkNumeric(String input){
+    public String checkNumeric(String input) {
         String result = input;
         // 변환
         try {
@@ -47,7 +47,7 @@ public class BaseBallGame {
         return result;
     }
 
-    public String checkDigits(String input){
+    public String checkDigits(String input) {
         String result = input;
         // 자리수
         while (!validateDigits(this.number)) {
@@ -58,14 +58,47 @@ public class BaseBallGame {
     }
 
 
-
-    public void judge(String input){
-        int cnt = 0;
+    public void judge(String input) {
+        int ballCnt = 0;
+        int strikeCnt = 0;
         String ball = getInputNumber(input);
 
-        for (int i = 0; i < ; i++) {
-            
+        for (int i = 0; i < number.length(); i++) {
+            int ballResult = isBall(number, ball, i) ? 1 : 0;
+            ballCnt += ballResult;
         }
 
+        for (int i = 0; i < number.length(); i++) {
+            strikeCnt += plusIfStrike(number, ball, i);
+        }
     }
+
+    public boolean isBall(String number, String ball, int ballIdx) {
+        boolean result = false;
+        char ballChar = ball.charAt(ballIdx);
+
+        for (int i = 0; i < number.length(); i++) {
+            char numberChar = number.charAt(i);
+            result = isEqualCharExcepIdx(numberChar, ballChar, i, ballIdx);
+        }
+
+        return result;
+    }
+
+
+    public boolean isEqualCharExcepIdx(char numberChar, char ballChar, int numberIdx, int ballIdx) {
+        if (numberIdx != ballIdx && numberChar == ballChar) {
+            return true;
+        }
+        return false;
+    }
+
+
+    public int plusIfStrike(String number, String ball, int idx) {
+        if (number.charAt(idx) == ball.charAt(idx)) {
+            return 1;
+        }
+        return 0;
+    }
+
 }
