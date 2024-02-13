@@ -8,6 +8,7 @@ import java.io.*;
 import java.util.Scanner;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.InstanceOfAssertFactories.PATH;
 
 class BaseBallGameTest {
     BaseBallGame baseBallGame;
@@ -27,7 +28,7 @@ class BaseBallGameTest {
     @Test
     @DisplayName("숫자 랜덤 추가")
     void test0() {
-        baseBallGame.validateDigits(baseBallGame.number);
+        baseBallGame.checkDigits(baseBallGame.number, 1, 999);
     }
 
     // 테스트 시 인풋처리
