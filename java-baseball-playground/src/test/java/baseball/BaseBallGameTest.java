@@ -151,13 +151,12 @@ class BaseBallGameTest {
     @Test
     @DisplayName("재시작 여부")
     void test4() {
-        testSetInput("123\n123\n2");
-//        testGameInput("123\n2");
+        testSetInput("123");
+        testGameInput("123\n2");
         baseBallGame.startGame();
-        assertThat(baseBallGame.isOnGame).isTrue();
-
-        testSetInput("123\n123\n1");
-//        testGameInput("123\n1");
+        assertThat(baseBallGame.isOnGame).isFalse();
+        testSetInput("123");
+        testGameInput("321\n222\n123\n2");
         baseBallGame.startGame();
         assertThat(baseBallGame.isOnGame).isFalse();
     }

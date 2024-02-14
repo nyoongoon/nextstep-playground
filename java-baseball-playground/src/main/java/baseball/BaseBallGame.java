@@ -19,7 +19,6 @@ public class BaseBallGame {
 
     public void startGame() {
         this.isOnGame = true;
-        setting();
         // 입력받기 &&  변환 가능 판단
         boolean isEnd = false;
         while(!isEnd){
