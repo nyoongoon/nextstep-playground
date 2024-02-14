@@ -5,14 +5,34 @@ import java.util.Scanner;
 public class BaseBallGame {
     Scanner scanner = new Scanner(System.in);
     String number;
-    int ballCnt;
-    int strikeCnt;
+    boolean isOnGame;
+
+    public class GameResult{
+        int ballCnt;
+        int strikeCnt;
+
+        public GameResult() {
+            this.ballCnt = 0;
+            this.strikeCnt = 0;
+        }
+    }
 
     public void startGame() {
+        this.isOnGame = true;
         setting();
         // 입력받기 &&  변환 가능 판단
-        String input = getInputNumber("숫자를 입력해주세요.");
-        judge(input);
+        boolean isEnd = false;
+        while(!isEnd){
+            String input = getInputNumber("숫자를 입력해주세요.");
+            GameResult gameResult = judge(input);
+            isEnd = processGameResult(gameResult);
+
+        }
+        boolean isReGame = getInputGameOption("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
+        if (isReGame) {
+            startGame();
+        }
+        this.isOnGame = false;
     }
 
     public void setScanner(Scanner scanner) {
@@ -20,8 +40,8 @@ public class BaseBallGame {
     }
 
     public void setting() {
-        this.ballCnt = 0;
-        this.strikeCnt = 0;
+//        this.ballCnt = 0;
+//        this.strikeCnt = 0;
         number = String.valueOf((int) (Math.random() * 899) + 100);
     }
 
@@ -72,40 +92,40 @@ public class BaseBallGame {
         return true;
     }
 
-    public void gameResult() {
-        if (this.ballCnt != 0) {
-            System.out.printf("%d볼 ", this.ballCnt);
+    public boolean processGameResult(GameResult gameResult) {
+        if (gameResult.ballCnt != 0) {
+            System.out.printf("%d볼 ", gameResult.ballCnt);
         }
-        if (this.strikeCnt != 0) {
-            System.out.printf("%d스트라이크 ", this.ballCnt);
+        if (gameResult.strikeCnt != 0) {
+            System.out.printf("%d스트라이크 ", gameResult.strikeCnt);
         }
         System.out.println();
-        if (this.strikeCnt != 3) {
-
+        if (gameResult.strikeCnt != 3) {
+           return false;
         }
-
         System.out.println("3개의 숫자를 모두 맞히셨습니다! 게임 종료");
-        boolean isReGame = getInputGameOption("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
-        if (isReGame) {
-            startGame();
-        }
+        return true;
+
+//        boolean isReGame = getInputGameOption("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
+//        if (isReGame) {
+//            startGame();
+//        }
     }
 
-    public void judge(String ball) {
-        this.ballCnt = 0;
-        this.strikeCnt = 0;
+    public GameResult judge(String ball) {
+        GameResult gameResult = new GameResult();
 
         for (int i = 0; i < ball.length(); i++) {
             int ballResult = isBall(number, ball, i) ? 1 : 0;
-            ballCnt += ballResult;
+            gameResult.ballCnt += ballResult;
         }
 
         for (int i = 0; i < ball.length(); i++) {
             int strikeResult = isStrike(number, ball, i) ? 1 : 0;
-            strikeCnt += strikeResult;
+            gameResult.strikeCnt += strikeResult;
         }
 
-        gameResult();
+        return gameResult;
     }
 
     public boolean isBall(String number, String ball, int ballIdx) {
