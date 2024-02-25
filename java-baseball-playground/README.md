@@ -70,3 +70,64 @@ ex) git checkout -b apply-feedback
 - 복잡도가 높아져 리팩토링하기 힘든 상태가 되면 버린다
 - 다시 도전
 - **-> 아무것도 없는 상태에서 새롭게 구현하는 것보다 레거시 코드가 있는 상태에 리팩토링하는 것이 몇 배 더 어렵다.**
+
+### 기능목록
+- 기능목록을 작성한 후 테스트 가능부분 찾아 tdd 도전
+- 1~9 숫자 중 랜덤으로 3개 값을 구한다
+- 사용자로부터 입력받은 3개 숫자 예외 처리
+- 1~9 숫자인가?
+- 중복값이 있는가?
+- 3자리인가?
+- 위치와 숫자값이 같은 경우 - 스트라이트
+- 위치는 다른데 숫자값이 같은 경우 - 볼 
+- 숫자값이 다른 경우 낫싱 
+- 사용자가 입력한 값에 대한 실행결과를 구한다
+
+### 1단계 - Util 성격의 기능이 TDD로 도전하기 좋음
+- 사용자로부터 입력받은 3개 숫자 예외 처리
+- 1~9 숫자인가?
+- 중복값이 있는가?
+- 3자리인가?
+```java
+@Test
+void 야구숫자_1_9_검증(){
+    // 인풋 아웃풋을 먼저 정하기
+    // 먼저 테스트코드 작성하고 alt+enter로 클래스 만들기
+    // 경계값을 가지고 판단
+    assertThat(ValidationUtils.validNo(9)).isTrue();
+    assertThat(ValidationUtils.validNo(1)).isTrue();
+    // 실패하는 케이스 찾기
+    assertThat(ValidationUtils.validNo(0)).isFalse(); //--> 리팩토링
+    assertThat(ValidationUtils.validNo(10)).isFalse();
+    // 커밋은 하나의 테스트 코드 작성 후 기능 구현 및 리팩토링까지 완료 후 커밋하기..
+}
+```
+```java
+public class ValidationUtils {
+
+    public static final int MIN = 0; //alt+cmd+c
+    public static final int MAX = 9;
+
+    public static boolean validNo(int no) {
+        if (no >= MIN && no <= MAX) {
+            return true;
+        }
+        return false;
+    }
+}
+```
+### 2단계 - 테스트 가능한 부분에 대해 TDD로 도전
+- 위치와 숫자값이 같은 경우 - 스트라이트
+- 위치는 다른데 숫자값이 같은 경우 - 볼
+- 숫자값이 다른 경우 낫싱 
+- -> 랜덤, 데이터베이스, 날짜, UI가 제외된 부분을 다음으로 도전해보기
+- --> 위의 기능을 **랜덤값하고 별개로** 해서 작성 해보기
+- -> 랜덤값을 컴퓨터가 만들었다는 것은 일단 가정(랜덤기능제외)하고 -> 인풋아웃풋 테스트 해보기
+- 큰 기능을 바로 테스트 및 구현하려고 하면 어려움 -> 작은 단위로 쪼개기
+- PlayResult result = play(Arrays.asList(1,2,3), Arrays.asList(4,5,6)) 
+- -> 위의 기능은 핵심 기능이므로 바로 구현하려고 하면 어려움..
+- -> 한 번에 만드려고하면 프로덕션 코드가 많고 리팩토링하기 어려워
+#### 작게 쪼개서 구현해보기
+- 예를들어 123 /456 비교 시
+- -> 먼저 1과 4만 비교하는 기능
+- -> 어떻게 낫싱, 볼, 스트라이크 비교할 것인가? 35분
