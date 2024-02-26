@@ -208,4 +208,41 @@ public BallStatus play(Ball ball) { // 처음에 List컬렉션으로 개발을 �
 - com: 123 / user 1, 4 ->nothing
 - com: 123 / user 1, 2 ->ball
 - com: 123 / user 1, 1 ->strike
-- 
+
+```java 
+//Balls에 대한 테스트
+public class BallsTest {
+    @Test
+    void nothing(){
+        Balls answers = new Balls(Arrays.asList(1, 2, 3)); // 컴퓨터의 공 3개
+        BallStatus status = answers.play(new Ball(1, 4));
+        assertThat(status).isEqualTo(BallStatus.NOTHING);
+        
+    }
+}
+public class Balls {
+    private final List<Ball> balls;
+
+    public Balls(List<Integer> answers) {
+        this.balls = mapBall(answers);
+    }
+
+    //인스턴스변수에 의존하지 않으므로 스태틱으로
+    private static List<Ball> mapBall(List<Integer> answers) {
+        List<Ball> balls = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            balls.add(new Ball(i + 1, answers.get(i)));
+        }
+        return balls;
+    }
+
+    public BallStatus play(Ball userBall) {
+//        return BallStatus.NOTHING;
+        return balls.stream()
+                .map(answer -> answer.play(userBall))
+                .filter(status -> status != BallStatus.NOTHING)
+                .findFirst()
+                .orElse(BallStatus.NOTHING); // 함수형으로 작성
+    }
+}
+```

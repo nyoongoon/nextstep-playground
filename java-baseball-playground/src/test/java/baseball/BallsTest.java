@@ -1,0 +1,22 @@
+package baseball;
+
+import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
+public class BallsTest {
+    @Test
+    void ball(){
+        Balls answers = new Balls(Arrays.asList(1, 2, 3)); // 컴퓨터의 공 3개
+        BallStatus status = answers.play(new Ball(1, 2));
+        assertThat(status).isEqualTo(BallStatus.BALL);
+    }
+    @Test
+    void nothing(){
+        Balls answers = new Balls(Arrays.asList(1, 2, 3)); // 컴퓨터의 공 3개
+        BallStatus status = answers.play(new Ball(1, 4));
+        assertThat(status).isEqualTo(BallStatus.NOTHING);
+    }
+}

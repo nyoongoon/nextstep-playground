@@ -10,3 +10,5 @@ baseball/BaseBallGameTest.java
  baseball.BaseBallGameTest
 baseball/BallTest.java
  baseball.BallTest
+baseball/BallsTest.java
+ baseball.BallsTest
