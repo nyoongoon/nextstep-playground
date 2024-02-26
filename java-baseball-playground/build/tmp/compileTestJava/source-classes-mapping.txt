@@ -4,7 +4,9 @@ study/StringTest.java
  study.StringTest
 study/SetTest.java
  study.SetTest
-baseball/BaseBallGameTest.java
- baseball.BaseBallGameTest
 baseball/ValidationUtilsTest.java
  baseball.ValidationUtilsTest
+baseball/BaseBallGameTest.java
+ baseball.BaseBallGameTest
+baseball/BallTest.java
+ baseball.BallTest

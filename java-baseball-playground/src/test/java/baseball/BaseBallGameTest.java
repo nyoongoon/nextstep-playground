@@ -9,6 +9,9 @@ import java.util.Scanner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * 내 풀이
+ */
 class BaseBallGameTest {
     BaseBallGame baseBallGame;
     OutputStream out;

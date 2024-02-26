@@ -130,4 +130,82 @@ public class ValidationUtils {
 #### 작게 쪼개서 구현해보기
 - 예를들어 123 /456 비교 시
 - -> 먼저 1과 4만 비교하는 기능
-- -> 어떻게 낫싱, 볼, 스트라이크 비교할 것인가? 35분
+- -> 어떻게 낫싱, 볼, 스트라이크 비교할 것인가? 35분 --> 숫자와 위치값이 같이 보내져야함!
+```java
+//tdd -> 1
+public class BallTest {
+    @Test
+    void nothing(){
+        Ball com = new Ball(1, 4); 
+        assertThat(com.play(new Ball(2, 5))).isEqualTo(BallStatus.NOTHING);
+    }
+    // 위의 메소드 작성 후 작성되지 못한 클래스 생성하며서 컴파일에러 우선 처리
+}
+```
+```java
+// 초기에 코드중복은 많이 일어남 // -> 테스트를 통과시킨 후 리팩토링하면서 테스트코드 중복도 제거한다.
+public class BallTest {
+    @Test
+    void ball() {
+        Ball com = new Ball(1, 4);
+        BallStatus status = com.play(new Ball(2, 4));
+        assertThat(status).isEqualTo(BallStatus.BALL);
+    }
+
+    @Test
+    void nothing() {
+        Ball com = new Ball(1, 4);
+        BallStatus status = com.play(new Ball(2, 5));
+        assertThat(status).isEqualTo(BallStatus.NOTHING);
+    }
+}
+// 리팩토링
+public class BallTest {
+    Ball com;
+
+    @BeforeEach
+    void setUp(){
+        com = new Ball(1, 4);
+    }
+    @Test
+    void ball() {
+        BallStatus status = com.play(new Ball(2, 4));
+        assertThat(status).isEqualTo(BallStatus.BALL);
+    }
+
+    @Test
+    void nothing() {
+        BallStatus status = com.play(new Ball(2, 5));
+        assertThat(status).isEqualTo(BallStatus.NOTHING);
+    }
+}
+```
+```java
+public BallStatus play(Ball ball) {
+        //if (ballNo == ball.ballNo) { -> 객체 직접 접근 좋지 않으므로 리팩토링
+    if (ball.matchBallNo(ballNo)) { // 객체의 메시지를 보내는 생각을 해야함..
+        return BallStatus.BALL;
+    }
+    return BallStatus.NOTHING;
+}
+
+private boolean matchBallNo(int ballNo) {
+    return this.ballNo == ballNo;
+}
+// 리팩토링
+public BallStatus play(Ball ball) { // 처음에 List컬렉션으로 개발을 시작했다면 이런 형식으로 개발하기 어려웠을 것!
+    if (this.equals(ball)) { // 객체끼리 비교 -> 객체지향적인 사고임 //equalsAndHashCode자동생성
+        return BallStatus.STRIKE;
+    }
+    //if (ballNo == ball.ballNo) {
+    if (ball.matchBallNo(ballNo)) { // 객체의 메시지를 보내는 생각을 해야함..
+        return BallStatus.BALL;
+    }
+    return BallStatus.NOTHING;
+}
+```
+- 조금씩 난이도를 높혀가면서 구현 -> Ball 객체의 3개를 갖는 테스트 구현
+- com: 123 / user 1, 4 ->nothing
+- com: 123 / user 1, 2 ->ball
+- com: 123 / user 1, 1 ->strike
+- 
