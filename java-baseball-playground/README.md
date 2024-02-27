@@ -246,3 +246,69 @@ public class Balls {
     }
 }
 ```
+- Balls.play(list) 구현하기
+```java
+ @Test
+void play() {
+    Balls answer = new Balls(Arrays.asList(1, 2, 3));
+    PlayResult result = answer.play(Arrays.asList(1, 2, 3));
+    assertThat(result.getStrike()).isEqualTo(0);
+    assertThat(result.getBall()).isEqualTo(0);
+}
+```
+```java
+public PlayResult play(List<Integer> balls) {
+    Balls userBalls = new Balls(balls);
+    PlayResult result = new PlayResult();
+    for(Ball answer : answers){
+        BallStatus status = userBalls.play(answer);
+        result.report(status); // 메시지 보내기..
+    }
+    return result;
+}
+```
+```java
+public class PlayResult {
+    private int strike;
+    private int ball;
+
+    public int getStrike() {
+        return this.strike;
+    }
+
+    public int getBall() {
+        return this.ball;
+    }
+
+    public void report(BallStatus status) {
+        // 메시지 보내기 형식으로 개발하기..
+        if (status.isStrike()) {
+            this.strike += 1;
+        }
+        if(status.isBall()){
+            this.ball += 1;
+        }
+    }
+}
+```
+```java
+@Test
+void play_3strike() {
+    Balls answer = new Balls(Arrays.asList(1, 2, 3));
+    PlayResult result = answer.play(Arrays.asList(1, 2, 3));
+    assertThat(result.getStrike()).isEqualTo(3);
+    assertThat(result.getBall()).isEqualTo(0);
+    assertThat(result.isGameEnd()).isTrue(); // 항상 메시지 보내는 개념으로 생각하기!
+}
+```
+
+#### cf) 객체에 메시지 보내기 ?
+- 항상 객체에게 메시지를 보내는 방식으로 개발!!(절차지향적으로 개발하지 말기)
+- -> 항상 객체가 갖고 있는 상태 데이터를 직접 접근하거나 get을 통해 접근을 지양하기..
+- -> 메시지를 보내서 상태를 갖고 있는 객체가 일을 하게 만들기..
+
+#### cf) 인터페이스 ?
+- 인터페이스는 변경 가능성이나 사용여지가 있을 때 생성하는 것이 좋다 -> 너무 남발될 수 있음
+#### cf) 테스트 코드 접근 제어자 ?
+- 일반적으로 private 메소드는 public 메소드에 포함되므로 public 메소드로 테스트 하면 됨
+- 테스트가 필요한 private 메소드인 경우 default 로 주어서 테스트 만들기 -> 테스트 코드는 같은 패키지임
