@@ -23,7 +23,8 @@ public class Balls {
 //        return BallStatus.NOTHING;
         return balls.stream()
                 .map(answer -> answer.play(userBall))
-                .filter(status -> status != BallStatus.NOTHING)
+                // Enum도 인스턴스이므로 메시지를 전달하는 방식이 더 좋음
+                .filter(BallStatus::isNotNothing)
                 .findFirst()
                 .orElse(BallStatus.NOTHING); // 함수형으로 작성
     }
