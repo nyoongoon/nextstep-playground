@@ -319,3 +319,34 @@ void play_3strike() {
 #### cf) 이늄 + 인터페이스
 - 이늄의 로직을 인터페이스로 만들 수 있음
 - -> if문 생성을 줄일 수 있음..
+
+### 유효성체크 리팩토링
+- 객체지향 생활체조 -> 원시값을 포장한다!
+- 기존
+```java
+public class ValidationUtils {
+    public static final int MIN = 0; //alt+cmd+c
+    public static final int MAX = 9;
+    public static boolean validNo(int no) {
+        if (no >= MIN && no <= MAX) {
+            return true;
+        }
+        return false;
+    }
+}
+```
+
+```java
+public class Ball {
+
+    private final int position;
+    //    private final int ballNo;
+    private final BallNumber ballNo; // 원시값 포장
+
+    public Ball(int position, int ballNo) {
+        this.position = position;
+        this.ballNo = new BallNumber(ballNo); // 유효성체크 보장
+    }
+    //..
+}
+```

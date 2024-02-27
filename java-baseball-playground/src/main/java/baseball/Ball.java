@@ -5,11 +5,12 @@ import java.util.Objects;
 public class Ball {
 
     private final int position;
-    private final int ballNo;
+//    private final int ballNo;
+    private final BallNumber ballNo;
 
     public Ball(int position, int ballNo) {
         this.position = position;
-        this.ballNo = ballNo;
+        this.ballNo = new BallNumber(ballNo);
     }
 
     public BallStatus play(Ball ball) {
