@@ -24,7 +24,7 @@ public class Ball {
         return BallStatus.NOTHING;
     }
 
-    private boolean matchBallNo(int ballNo) {
+    private boolean matchBallNo(BallNumber ballNo) {
         return this.ballNo == ballNo;
     }
 
